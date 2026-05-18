@@ -1,0 +1,42 @@
+<!-- Simple email_invoice_simple.html -->
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+    <div style="background: #f26522; padding: 20px; text-align: center;">
+        <h1 style="color: white; margin: 0;">INVOICE</h1>
+    </div>
+    
+    <div style="padding: 20px;">
+        <p>Dear {{ invoice.user.username }},</p>
+        <p>Thank you for your purchase!</p>
+        
+        <div style="background: #f5f5f5; padding: 15px; margin: 15px 0;">
+            <p><strong>Invoice #:</strong> {{ invoice.invoice_number }}</p>
+            <p><strong>Date:</strong> {{ invoice.created_at|date:"F d, Y" }}</p>
+            <p><strong>Total:</strong> ${{ invoice.total_amount }}</p>
+        </div>
+        
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr style="background: #f26522; color: white;">
+                <th style="padding: 10px;">Product</th>
+                <th style="padding: 10px;">Price</th>
+            </tr>
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 10px;">{{ invoice.order.product.name }}</td>
+                <td style="padding: 10px;">${{ invoice.order.price }}</td>
+            </tr>
+            <tr style="background: #f5f5f5; font-weight: bold;">
+                <td style="padding: 10px; text-align: right;">Total:</td>
+                <td style="padding: 10px;">${{ invoice.total_amount }}</td>
+            </tr>
+        </table>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{{ invoice_url }}" style="background: #f26522; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+                Download Invoice
+            </a>
+        </div>
+        
+        <p style="color: #666; font-size: 12px; text-align: center; margin-top: 20px;">
+            Eflyer - support@eflyer.com
+        </p>
+    </div>
+</div>

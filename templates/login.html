@@ -1,0 +1,198 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Eflyer</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        .login-container {
+            max-width: 450px;
+            margin: 50px auto;
+            padding: 0 15px;
+            width: 100%;
+        }
+        .login-box {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo img {
+            max-width: 150px;
+        }
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            font-weight: 600;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #555;
+            display: block;
+        }
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        .form-control:focus {
+            border-color: #f26522;
+            outline: none;
+            box-shadow: 0 0 5px rgba(242,101,34,0.3);
+        }
+        .btn-login {
+            background: #f26522;
+            border: none;
+            color: white;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        .btn-login:hover {
+            background: #d55418;
+            transform: translateY(-2px);
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+        .register-link a {
+            color: #f26522;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .alert-error, .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .forgot-password {
+            text-align: right;
+            margin-top: 10px;
+        }
+        .forgot-password a {
+            color: #999;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        .forgot-password a:hover {
+            color: #f26522;
+        }
+        .input-icon {
+            position: relative;
+        }
+        .input-icon i {
+            position: absolute;
+            left: 15px;
+            top: 38px;
+            color: #999;
+        }
+        .input-icon input {
+            padding-left: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo">
+                <a href="{% url 'home' %}">
+                    <img src="{% static 'images/logo.png' %}" alt="Eflyer Logo">
+                </a>
+            </div>
+            
+            <h2>Welcome Back!</h2>
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="form-group input-icon">
+                    <label>Username</label>
+                    <i class="fa fa-user"></i>
+                    <input type="text" name="username" class="form-control" placeholder="Enter your username" required autofocus>
+                </div>
+                
+                <div class="form-group input-icon">
+                    <label>Password</label>
+                    <i class="fa fa-lock"></i>
+                    <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+                </div>
+                
+                <div class="forgot-password">
+                    <a href='password_reset' ">Forgot Password?</a>
+                </div>
+                
+                <button type="submit" class="btn-login">
+                    <i class="fa fa-sign-in"></i> Login
+                </button>
+            </form>
+            
+            <div class="register-link">
+                Don't have an account? <a href="{% url 'register' %}">Register Now</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

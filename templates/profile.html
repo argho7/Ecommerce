@@ -1,0 +1,286 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Eflyer</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body {
+            background: #f5f5f5;
+        }
+        .profile-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 15px;
+        }
+        .profile-sidebar {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #f26522;
+        }
+        .profile-sidebar h4 {
+            margin: 10px 0;
+            color: #333;
+        }
+        .profile-sidebar p {
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .verified-badge {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        .not-verified {
+            background: #dc3545;
+        }
+        .profile-nav {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        .profile-nav li {
+            margin-bottom: 10px;
+        }
+        .profile-nav li a {
+            display: block;
+            padding: 10px 15px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .profile-nav li a:hover {
+            background: #f26522;
+            color: white;
+        }
+        .profile-nav li.active a {
+            background: #f26522;
+            color: white;
+        }
+        .profile-content {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        .profile-content h2 {
+            margin-bottom: 20px;
+            color: #333;
+            border-bottom: 2px solid #f26522;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 100%;
+        }
+        .current-pic {
+            margin-top: 10px;
+        }
+        .current-pic img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .btn-update {
+            background: #f26522;
+            border: none;
+            color: white;
+            padding: 10px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-update:hover {
+            background: #d55418;
+        }
+        .alert {
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .alert-error, .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -15px;
+        }
+        .col-md-3 {
+            width: 25%;
+            padding: 0 15px;
+        }
+        .col-md-9 {
+            width: 75%;
+            padding: 0 15px;
+        }
+        @media (max-width: 768px) {
+            .col-md-3, .col-md-9 {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="profile-container">
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Sidebar Menu -->
+            <div class="profile-sidebar">
+                {% if user.profile_picture and user.profile_picture.url != '/media/profile_pictures/default.png' %}
+                    <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="profile-pic">
+                {% else %}
+                    <img src="{% static 'images/default-profile.png' %}" alt="Profile Picture" class="profile-pic">
+                {% endif %}
+                
+                <h4>{{ user.username }}</h4>
+                <p>{{ user.email }}</p>
+                {% if user.phone %}
+                    <p><i class="fa fa-phone"></i> {{ user.phone }}</p>
+                {% endif %}
+                
+                <!-- Verification Status -->
+                {% if user.is_verified %}
+                    <span class="verified-badge">
+                        <i class="fa fa-check-circle"></i> Verified
+                    </span>
+                {% else %}
+                    <span class="verified-badge not-verified">
+                        <i class="fa fa-exclamation-circle"></i> Not Verified
+                    </span>
+                {% endif %}
+                
+                <hr>
+                <ul class="profile-nav">
+                    <li class="active"><a href="{% url 'profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
+                    <li><a href=" 'order_history'"><i class="fa fa-shopping-bag"></i> Order History</a></li>
+                    <li><a href=" 'change_password' "><i class="fa fa-key"></i> Change Password</a></li>
+                    <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <div class="profile-content">
+                <h2>My Profile</h2>
+                
+                <!-- Display Messages -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <!-- Profile Update Form -->
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Username *</label>
+                                <input type="text" name="username" class="form-control" value="{{ user.username }}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email *</label>
+                                <input type="email" name="email" class="form-control" value="{{ user.email }}" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" name="first_name" class="form-control" value="{{ user.first_name }}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" name="last_name" class="form-control" value="{{ user.last_name }}">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="number" name="phone" class="form-control" value="{{ user.phone }}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Profile Picture</label>
+                                <input type="file" name="profile_picture" class="form-control-file" accept="image/*">
+                                {% if user.profile_picture %}
+                                    <div class="current-pic">
+                                        <small>Current: {{ user.profile_picture.name }}</small>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-update">
+                        <i class="fa fa-save"></i> Update Profile
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,261 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Eflyer</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            padding: 50px 0;
+        }
+        .register-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0 15px;
+            width: 100%;
+        }
+        .register-box {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo img {
+            max-width: 150px;
+        }
+        .register-box h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            font-weight: 600;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #555;
+            display: block;
+        }
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        .form-control:focus {
+            border-color: #f26522;
+            outline: none;
+            box-shadow: 0 0 5px rgba(242,101,34,0.3);
+        }
+        .btn-register {
+            background: #f26522;
+            border: none;
+            color: white;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        .btn-register:hover {
+            background: #d55418;
+            transform: translateY(-2px);
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+        .login-link a {
+            color: #f26522;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .alert-error, .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .input-icon {
+            position: relative;
+        }
+        .input-icon i {
+            position: absolute;
+            left: 15px;
+            top: 38px;
+            color: #999;
+        }
+        .input-icon input {
+            padding-left: 40px;
+        }
+        .terms {
+            margin: 20px 0;
+            font-size: 13px;
+            color: #666;
+            text-align: center;
+        }
+        .terms a {
+            color: #f26522;
+            text-decoration: none;
+        }
+        .password-strength {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .weak { color: #dc3545; }
+        .medium { color: #ffc107; }
+        .strong { color: #28a745; }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-box">
+            <div class="logo">
+                <a href="{% url 'home' %}">
+                    <img src="{% static 'images/logo.png' %}" alt="Eflyer Logo">
+                </a>
+            </div>
+            
+            <h2>Create Account</h2>
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="form-group input-icon">
+                    <label>Username *</label>
+                    <i class="fa fa-user"></i>
+                    <input type="text" name="username" class="form-control" placeholder="Choose a username" required autofocus>
+                </div>
+                
+                <div class="form-group input-icon">
+                    <label>Email *</label>
+                    <i class="fa fa-envelope"></i>
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group input-icon">
+                    <label>Password *</label>
+                    <i class="fa fa-lock"></i>
+                    <input type="password" name="password1" id="password1" class="form-control" placeholder="Create a password" required>
+                    <div class="password-strength" id="passwordStrength"></div>
+                </div>
+                
+                <div class="form-group input-icon">
+                    <label>Confirm Password *</label>
+                    <i class="fa fa-check-circle"></i>
+                    <input type="password" name="password2" id="password2" class="form-control" placeholder="Confirm your password" required>
+                    <div id="passwordMatch" style="font-size: 12px; margin-top: 5px;"></div>
+                </div>
+                
+                <div class="terms">
+                    By registering, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                </div>
+                
+                <button type="submit" class="btn-register">
+                    <i class="fa fa-user-plus"></i> Register
+                </button>
+            </form>
+            
+            <div class="login-link">
+                Already have an account? <a href="{% url 'login' %}">Login Here</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Password strength checker
+        const password1 = document.getElementById('password1');
+        const strengthDiv = document.getElementById('passwordStrength');
+        
+        password1.addEventListener('input', function() {
+            const password = this.value;
+            let strength = 0;
+            
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]+/)) strength++;
+            if (password.match(/[A-Z]+/)) strength++;
+            if (password.match(/[0-9]+/)) strength++;
+            if (password.match(/[$@#&!]+/)) strength++;
+            
+            if (password.length === 0) {
+                strengthDiv.innerHTML = '';
+            } else if (strength <= 2) {
+                strengthDiv.innerHTML = '<span class="weak">Weak Password</span>';
+            } else if (strength === 3 || strength === 4) {
+                strengthDiv.innerHTML = '<span class="medium">Medium Password</span>';
+            } else {
+                strengthDiv.innerHTML = '<span class="strong">Strong Password</span>';
+            }
+        });
+        
+        // Password match checker
+        const password2 = document.getElementById('password2');
+        const matchDiv = document.getElementById('passwordMatch');
+        
+        function checkMatch() {
+            if (password2.value.length === 0) {
+                matchDiv.innerHTML = '';
+            } else if (password1.value === password2.value) {
+                matchDiv.innerHTML = '<span style="color: #28a745;">✓ Passwords match</span>';
+            } else {
+                matchDiv.innerHTML = '<span style="color: #dc3545;">✗ Passwords do not match</span>';
+            }
+        }
+        
+        password1.addEventListener('input', checkMatch);
+        password2.addEventListener('input', checkMatch);
+    </script>
+</body>
+</html>

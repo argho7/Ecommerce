@@ -30,7 +30,6 @@ DEBUG = True if os.getenv('DEBUG') == 'True' else False
 
 ALLOWED_HOSTS = [ os.getenv('ALLOWED_HOSTS') ]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ecomm',
 ]
+
+# My Abstract user model for user
+AUTH_USER_MODEL = 'ecomm.Custom_User'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,7 +67,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.contrib.messages.context_processors.messages'
             ],
         },
     },
@@ -108,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Dhaka'
 
 USE_I18N = True
 
@@ -124,3 +127,27 @@ STATICFILES_DIRS = [ BASE_DIR / 'static/']
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
+
+# FOR SSLCOMMERZ
+SSLCOMMERZ_STORE_ID = os.getenv('SSLCOMMERZ_STORE_ID')
+SSLCOMMERZ_STORE_PASSWORD = os.getenv('SSLCOMMERZ_STORE_PASSWORD')
+SSLCOMMERZ_SANDBOX = True if os.getenv('SSLCOMMERZ_SANDBOX') == 'True' else False
+
+
+#FOR SENDING EMAIL
+# Specify the SMTP backend
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# Host and Port (e.g., for Gmail)
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True  # Use TLS for security
+
+# Authentication
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD') # Use an App Password, not your regular password
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - Eflyer{% endblock title %}
+
+{% block content %}
+<!-- Fashion Section -->
+
+<div class="fashion_section">
+    <div class="container">
+        <h1 class="fashion_taital">
+        </h1>
+        <div class="fashion_section_2">
+            <div class="row">
+                {% for product in products %}
+                <div class="col-lg-4 col-sm-4">
+                    <div class="box_main">
+                        <h4 class="shirt_text">{{ product.name }}</h4>
+                        <p class="price_text">Price <span style="color: #262626;">${{ product.price }}</span></p>
+                        <div class="tshirt_img">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                            {% else %}
+                                <img src="{% static 'images/no-image.png' %}" alt="{{ product.name }}">
+                            {% endif %}
+                        </div>
+                        <div class="btn_main">
+                            <div class="buy_bt"><a href="{% url 'buy_now' product.id %}">Buy Now</a></div>
+                            <div class="seemore_bt">
+                                <a href="{% url 'product_detail' slug=product.slug %}">See More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                    <p>No products found in this category!</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

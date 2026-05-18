@@ -1,0 +1,298 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} - Eflyer{% endblock title %}
+
+{% block extra_css %}
+<style>
+    .product-detail-container {
+        padding: 60px 0;
+        background: #f9f9f9;
+    }
+    .product-image {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    .product-image img {
+        max-width: 100%;
+        max-height: 400px;
+        object-fit: contain;
+    }
+    .product-info {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    .product-title {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #333;
+    }
+    .product-price {
+        font-size: 28px;
+        font-weight: bold;
+        color: #f26522;
+        margin-bottom: 20px;
+    }
+    .product-description {
+        color: #666;
+        line-height: 1.8;
+        margin-bottom: 30px;
+    }
+    .product-meta {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+    }
+    .product-meta p {
+        margin-bottom: 10px;
+    }
+    .product-meta strong {
+        color: #333;
+        width: 120px;
+        display: inline-block;
+    }
+    .availability {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+    .in-stock {
+        color: #28a745;
+        font-weight: 600;
+    }
+    .out-of-stock {
+        color: #dc3545;
+        font-weight: 600;
+    }
+    .btn-buy {
+        background: #f26522;
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s;
+        width: 100%;
+    }
+    .btn-buy:hover {
+        background: #d55418;
+        transform: translateY(-2px);
+    }
+    .btn-buy:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+    }
+    .btn-back {
+        background: #333;
+        color: white;
+        padding: 10px 25px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 20px;
+        transition: all 0.3s;
+    }
+    .btn-back:hover {
+        background: #555;
+        color: white;
+    }
+    .breadcrumb {
+        background: transparent;
+        padding: 0;
+        margin-bottom: 30px;
+    }
+    .breadcrumb a {
+        color: #f26522;
+        text-decoration: none;
+    }
+    .alert {
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+    .alert-success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+    .alert-danger {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+    .related-products {
+        margin-top: 60px;
+    }
+    .related-products h3 {
+        text-align: center;
+        margin-bottom: 40px;
+        position: relative;
+    }
+    .related-products h3:after {
+        content: '';
+        display: block;
+        width: 50px;
+        height: 3px;
+        background: #f26522;
+        margin: 10px auto 0;
+    }
+    .related-product-card {
+        background: white;
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+        transition: all 0.3s;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .related-product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    }
+    .related-product-card img {
+        max-width: 100%;
+        height: 150px;
+        object-fit: contain;
+        margin-bottom: 15px;
+    }
+    .related-product-card h5 {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    .related-product-card .price {
+        color: #f26522;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    .btn-sm {
+        padding: 5px 15px;
+        font-size: 12px;
+        background: #f26522;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+    .btn-sm:hover {
+        background: #d55418;
+        color: white;
+    }
+    @media (max-width: 768px) {
+        .product-title {
+            font-size: 24px;
+        }
+        .product-price {
+            font-size: 22px;
+        }
+    }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+<div class="product-detail-container">
+    <div class="container">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <ol class="breadcrumb" style="background: transparent; padding: 0;">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="'category_url' slug=product.category.slug ">{{ product.category.name }}</a></li>
+                <li class="breadcrumb-item active">{{ product.name }}</li>
+            </ol>
+        </nav>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="row">
+            <!-- Product Image -->
+            <div class="col-md-6">
+                <div class="product-image">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% else %}
+                        <img src="{% static 'images/no-image.png' %}" alt="{{ product.name }}">
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="col-md-6">
+                <div class="product-info">
+                    <h1 class="product-title">{{ product.name }}</h1>
+                    <div class="product-price">${{ product.price }}</div>
+                    
+                    <div class="product-meta">
+                        <p><strong>Category:</strong> {{ product.category.name }}</p>
+                        <p><strong>SKU:</strong> #{{ product.id }}</p>
+                    </div>
+
+                    <div class="product-description">
+                        <strong>Description:</strong>
+                        <p>{{ product.description|linebreaks|default:"No description available." }}</p>
+                    </div>
+
+                    <div class="availability">
+                        {% if product.is_available %}
+                            <span class="in-stock">
+                                <i class="fa fa-check-circle"></i> In Stock
+                            </span>
+                        {% else %}
+                            <span class="out-of-stock">
+                                <i class="fa fa-times-circle"></i> Out of Stock
+                            </span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Buy Button -->
+                    <form method="POST" action="{% url 'buy_now' product.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-buy" {% if not product.is_available %}disabled{% endif %}>
+                            <i class="fa fa-bolt"></i> Buy Now
+                        </button>
+                    </form>
+
+                    <a href="{% url 'home' %}" class="btn-back">
+                        <i class="fa fa-arrow-left"></i> Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        {% if related_products %}
+        <div class="related-products">
+            <h3>You May Also Like</h3>
+            <div class="row">
+                {% for related in related_products %}
+                <div class="col-md-3 col-sm-6">
+                    <div class="related-product-card">
+                        {% if related.image %}
+                            <img src="{{ related.image.url }}" alt="{{ related.name }}">
+                        {% else %}
+                            <img src="{% static 'images/no-image.png' %}" alt="{{ related.name }}">
+                        {% endif %}
+                        <h5>{{ related.name }}</h5>
+                        <div class="price">${{ related.price }}</div>
+                        <a href="{% url 'product_detail' category_slug=related.category.slug product_slug=related.slug %}" class="btn-sm">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
