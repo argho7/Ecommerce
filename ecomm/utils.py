@@ -22,12 +22,12 @@ def send_email(subject=None, message=None, receiver=None ):
     )
 
 
+SSLCOMMERZ_settings = { 'store_id': settings.SSLCOMMERZ_STORE_ID, 
+            'store_pass': settings.SSLCOMMERZ_STORE_PASSWORD,
+            'issandbox': settings.SSLCOMMERZ_SANDBOX 
+            }
 
 def payment_system(request, product, category):
-    SSLCOMMERZ_settings = { 'store_id': settings.SSLCOMMERZ_STORE_ID, 
-                'store_pass': settings.SSLCOMMERZ_STORE_PASSWORD,
-                'issandbox': settings.SSLCOMMERZ_SANDBOX 
-                }
     
     sslcommez = SSLCOMMERZ(SSLCOMMERZ_settings)
     
@@ -58,11 +58,3 @@ def payment_system(request, product, category):
     print(response['status'])
     print(response['sessionkey'])
     return response
-
-def payment_info_sskey():
-    settings = { 'store_id': 'testbox', 'store_pass': 'qwerty', 'issandbox': True }
-    sslcommez = SSLCOMMERZ(settings)
-
-    sessionkey = 'A8EF93B75B8107E4F36049E80B4F9149'
-    response = sslcommez.transaction_query_session(sessionkey)
-    print(response)

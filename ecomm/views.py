@@ -144,6 +144,9 @@ def buy_now(request, product_id):
 
 @csrf_exempt
 def payment_success(request):
+    if request.method=='POST':
+        response=request.POST
+        print(response)
     return render(request, 'payment_success.html')
 
 @csrf_exempt
