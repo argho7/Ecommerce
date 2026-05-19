@@ -29,7 +29,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
+    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING,)
     name = models.CharField(max_length=100, blank=True, null=True)
     price = models.DecimalField(max_digits=10,decimal_places=2, default=0)
     image = models.ImageField(upload_to='products/', blank=True, null=True)
@@ -54,7 +54,7 @@ class Order(models.Model):
                    ('Unknown','Unknown')]
     
     user = models.ForeignKey(Custom_User, on_delete=models.DO_NOTHING, null = True)
-    product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
+    product = models.ForeignKey(Product, on_delete=models.DO_NOTHING, null=True)
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING, null = True)
     state=models.CharField(choices=state_choices, max_length=10, default='Unknown')
     tran_id=models.CharField(max_length=40, blank=True, null=True)
@@ -67,7 +67,7 @@ class Order(models.Model):
     status = models.CharField( max_length=50, blank=True, null=True)
     tran_time=models.DateTimeField(auto_now_add=True,  null=True)
     error = models.CharField( max_length=50, blank=True, null=True)
-    currency = models.CharField( max_length=50, blank=True, null=True)
+    currency = models.CharField( max_length=50,default="BDT", blank=True, null=True)
     stacard_issuertus = models.CharField( max_length=50, blank=True, null=True)
     card_brand = models.CharField( max_length=50, blank=True, null=True)
     card_sub_brand = models.CharField( max_length=50, blank=True, null=True)

@@ -11,7 +11,6 @@ def Generate_Slug(model, name):
         slug=slug + str(uuid4())[:4]
     return slug
 
-
 def send_email(subject=None, message=None, receiver=None ):
     send_mail(
         subject,
@@ -28,9 +27,7 @@ SSLCOMMERZ_settings = { 'store_id': settings.SSLCOMMERZ_STORE_ID,
             }
 
 def payment_system(request, product, category):
-    
     sslcommez = SSLCOMMERZ(SSLCOMMERZ_settings)
-    
     post_body = {
     'total_amount' : product.price,
     'currency' : "BDT",
@@ -55,6 +52,4 @@ def payment_system(request, product, category):
 
     response = sslcommez.createSession(post_body)
     # print(response)
-    print(response['status'])
-    print(response['sessionkey'])
     return response

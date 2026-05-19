@@ -135,8 +135,19 @@ def buy_now(request, product_id):
     category=Category.objects.get(product__id=product_id)
 
     response = payment_system(request,product,category)
-    status=response["status"]
+    
+    amount=response.get('amount')
+    currency=response.get('currency')
+    user=response.get('cus_name')
+    email=
+    tran_id=response.get('tran_id')
+    tran_date=response.get('tran_date')
+    
+    Order.objects.create(user=request.user, product=product, category=category, price=product.price, )
 
+    # Order.objects.create(price=product.price,  )
+
+    status=response["status"]
     if status == "SUCCESS":
         return redirect(response['GatewayPageURL'])
     else:
@@ -146,7 +157,15 @@ def buy_now(request, product_id):
 def payment_success(request):
     if request.method=='POST':
         response=request.POST
-        print(response)
+        amount=response.get('amount')
+        tran_id=response.get('tran_id')
+        tran_date=response.get('tran_date')
+        send_email(
+            subject="Payment receipt",
+            message=f"""Order complete : \n amount : {amount} \n transaction id : {tran_id} \n date : {tran_date}""",
+            receiver=request.user.email,
+        )
+        # print(response)
     return render(request, 'payment_success.html')
 
 @csrf_exempt

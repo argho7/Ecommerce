@@ -1,30 +1,30 @@
 {
    "tran_id":[
-      "25960bed-23ea-4fad-9a6b-fc11f67b3407"
+      "45c60e2c-e64a-42f8-832a-ab696ac05851"
    ],
    "val_id":[
-      "260519165112UfKF9IrgFXnM3G3"
+      "260519181430oG2w3vvLOUGrHlu"
    ],
    "amount":[
-      "50.00"
+      "400.00"
    ],
    "card_type":[
       "BKASH-BKash"
    ],
    "store_amount":[
-      "48.75"
+      "390.00"
    ],
    "card_no":[
       ""
    ],
    "bank_tran_id":[
-      "260519165112EbZqgGYXcQqIYC7"
+      "260519181430UjyA88wjV70YKYv"
    ],
    "status":[
       "VALID"
    ],
    "tran_date":[
-      "2026-05-19 16:51:12"
+      "2026-05-19 18:14:22"
    ],
    "error":[
       ""
@@ -51,25 +51,25 @@
       "argho6a05c23a410ee"
    ],
    "verify_sign":[
-      "43a3dba1300af5dad9767a9efd07650e"
+      "3c5d25a1444588f9e28fc6734c79b629"
    ],
    "verify_key":[
       "amount,bank_tran_id,base_fair,card_brand,card_issuer,card_issuer_country,card_issuer_country_code,card_no,card_sub_brand,card_type,currency,currency_amount,currency_rate,currency_type,error,risk_level,risk_title,status,store_amount,store_id,tran_date,tran_id,val_id,value_a,value_b,value_c,value_d"
    ],
    "verify_sign_sha2":[
-      "39099f7838ca812690a0fe98c045b98b0f0dee66babd2e91a90b445e15a2fead"
+      "d01d44f69dda3a881142a7c0567df416b2dd93fb34cea5bdd6e4d516643b1558"
    ],
    "currency_type":[
-      ""
+      "BDT"
    ],
    "currency_amount":[
-      ""
+      "400.00"
    ],
    "currency_rate":[
-      ""
+      "1.0000"
    ],
    "base_fair":[
-      ""
+      "0.00"
    ],
    "value_a":[
       ""
@@ -91,128 +91,5 @@
    ],
    "risk_title":[
       "Safe"
-   ]
-}
-
-
-
-
-
-
-{
-   "APIConnect":"DONE",
-   "no_of_trans_found":3,
-   "element":[
-      {
-         "val_id":"260519165027QnsrN4UC1sUZRFy",
-         "status":"VALID",
-         "validated_on":"",
-         "currency_type":"BDT",
-         "currency_amount":"50.00",
-         "currency_rate":"1.0000",
-         "base_fair":"0.00",
-         "value_a":"",
-         "value_b":"",
-         "value_c":"",
-         "value_d":"",
-         "discount_percentage":"10.00",
-         "discount_remarks":"Sample 10% Discount for this transaction.",
-         "discount_amount":5,
-         "tran_date":"2026-05-19 16:49:09",
-         "tran_id":"25960bed-23ea-4fad-9a6b-fc11f67b3407",
-         "amount":"50.00",
-         "store_amount":"48.75",
-         "bank_tran_id":"260519165027YMrpDas0R19s9fx",
-         "card_type":"BKASH-BKash",
-         "risk_title":"Safe",
-         "risk_level":"0",
-         "currency":"BDT",
-         "bank_gw":"BKash",
-         "card_no":"",
-         "card_issuer":"BKash Mobile Banking",
-         "card_brand":"MOBILEBANKING",
-         "card_issuer_country":"Bangladesh",
-         "card_issuer_country_code":"BD",
-         "gw_version":"4.00",
-         "emi_instalment":"0",
-         "emi_amount":"",
-         "emi_description":"",
-         "emi_issuer":"",
-         "error":""
-      },
-      {
-         "val_id":"2605191650512ycYR7OVBbIn76q",
-         "status":"VALID",
-         "validated_on":"",
-         "currency_type":"",
-         "currency_amount":"",
-         "currency_rate":"",
-         "base_fair":"",
-         "value_a":"",
-         "value_b":"",
-         "value_c":"",
-         "value_d":"",
-         "discount_percentage":"10.00",
-         "discount_remarks":"Sample 10% Discount for this transaction.",
-         "discount_amount":5,
-         "tran_date":"2026-05-19 16:50:49",
-         "tran_id":"25960bed-23ea-4fad-9a6b-fc11f67b3407",
-         "amount":"50.00",
-         "store_amount":"48.75",
-         "bank_tran_id":"260519165051YZVaRqKk6t28dns",
-         "card_type":"BKASH-BKash",
-         "risk_title":"Safe",
-         "risk_level":"0",
-         "currency":"BDT",
-         "bank_gw":"BKash",
-         "card_no":"",
-         "card_issuer":"BKash Mobile Banking",
-         "card_brand":"MOBILEBANKING",
-         "card_issuer_country":"Bangladesh",
-         "card_issuer_country_code":"BD",
-         "gw_version":"4.00",
-         "emi_instalment":"0",
-         "emi_amount":"",
-         "emi_description":"",
-         "emi_issuer":"",
-         "error":""
-      },
-      {
-         "val_id":"260519165112UfKF9IrgFXnM3G3",
-         "status":"VALID",
-         "validated_on":"",
-         "currency_type":"",
-         "currency_amount":"",
-         "currency_rate":"",
-         "base_fair":"",
-         "value_a":"",
-         "value_b":"",
-         "value_c":"",
-         "value_d":"",
-         "discount_percentage":"10.00",
-         "discount_remarks":"Sample 10% Discount for this transaction.",
-         "discount_amount":5,
-         "tran_date":"2026-05-19 16:51:12",
-         "tran_id":"25960bed-23ea-4fad-9a6b-fc11f67b3407",
-         "amount":"50.00",
-         "store_amount":"48.75",
-         "bank_tran_id":"260519165112EbZqgGYXcQqIYC7",
-         "card_type":"BKASH-BKash",
-         "risk_title":"Safe",
-         "risk_level":"0",
-         "currency":"BDT",
-         "bank_gw":"BKash",
-         "card_no":"",
-         "card_issuer":"BKash Mobile Banking",
-         "card_brand":"MOBILEBANKING",
-         "card_issuer_country":"Bangladesh",
-         "card_issuer_country_code":"BD",
-         "gw_version":"4.00",
-         "emi_instalment":"0",
-         "emi_amount":"",
-         "emi_description":"",
-         "emi_issuer":"",
-         "error":""
-      }
    ]
 }
