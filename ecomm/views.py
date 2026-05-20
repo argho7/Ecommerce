@@ -54,8 +54,8 @@ def cart(request):
 
     
 def add_to_cart(request,product_id=None):
-    context={}
-    return render(request, 'search.html', context)
+
+    return render(request, 'search.html',)
 
 @login_required
 def profile(request):
@@ -75,7 +75,6 @@ def profile(request):
         return redirect('profile')
     
     return render(request, 'profile.html')
-
 
 def register_view(request):
     if request.method == "POST":
@@ -106,7 +105,6 @@ def register_view(request):
 
     return render(request, 'register.html')
 
-
 def login_view(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -129,23 +127,12 @@ def logout_view(request):
     messages.success(request, "Logged out successfully")
     return redirect('home')
 
-
+@login_required
 def buy_now(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     category=Category.objects.get(product__id=product_id)
 
     response = payment_system(request,product,category)
-    
-    amount=response.get('amount')
-    currency=response.get('currency')
-    user=response.get('cus_name')
-    email=
-    tran_id=response.get('tran_id')
-    tran_date=response.get('tran_date')
-    
-    Order.objects.create(user=request.user, product=product, category=category, price=product.price, )
-
-    # Order.objects.create(price=product.price,  )
 
     status=response["status"]
     if status == "SUCCESS":
@@ -157,25 +144,27 @@ def buy_now(request, product_id):
 def payment_success(request):
     if request.method=='POST':
         response=request.POST
+
         amount=response.get('amount')
         tran_id=response.get('tran_id')
         tran_date=response.get('tran_date')
+
+        get_product=Order.objects.get(tran_id = tran_id)
+        user_mail=get_product.user.email
+
         send_email(
             subject="Payment receipt",
             message=f"""Order complete : \n amount : {amount} \n transaction id : {tran_id} \n date : {tran_date}""",
-            receiver=request.user.email,
+            receiver=user_mail
         )
-        # print(response)
     return render(request, 'payment_success.html')
 
 @csrf_exempt
 def payment_fail(request):
     return render(request, 'payment_fail.html')
 
-
 def payment_cancel(request):
     return render(request, 'payment_cancel.html')
 
 def payment_gate_auth_fail(request):
     return render(request, 'payment_gate_auth_fail.html')
-

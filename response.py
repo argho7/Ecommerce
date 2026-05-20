@@ -1,4 +1,41 @@
 {
+   "status":"SUCCESS",
+   "failedreason":"",
+   "sessionkey":"85CD52BEE0ABC9C8E8B4D84D545C1896",
+   "gw":{
+      "visa":"city_visa,ebl_visa,visacard",
+      "master":"city_master,ebl_master,mastercard",
+      "amex":"city_amex,amexcard",
+      "othercards":"qcash,fastcash",
+      "internetbanking":"city,abbank,bankasia,ibbl,mtbl,tapnpay,eblsky,instapay,pmoney,woori,modhumoti,fsibl",
+      "mobilebanking":"dbblmobilebanking,bkash,nagad,abbank,ibbl,tap,upay,okaywallet,cellfine,mcash"
+   },
+   "redirectGatewayURL":"https://sandbox.sslcommerz.com/gwprocess/v4/bankgw/indexhtmlOTP.php?mamount=50.00&ssl_id=260519200828IAM5x4jk5feEX2h&Q=REDIRECT&SESSIONKEY=85CD52BEE0ABC9C8E8B4D84D545C1896&tran_type=success&cardname=",
+   "directPaymentURLBank":"",
+   "directPaymentURLCard":"",
+   "directPaymentURL":"",
+   "redirectGatewayURLFailed":"",
+   "GatewayPageURL":"https://sandbox.sslcommerz.com/EasyCheckOut/testcde85cd52bee0abc9c8e8b4d84d545c1896",
+   "storeBanner":"https://sandbox.sslcommerz.com/stores/logos/demoLogo.png",
+   "storeLogo":"https://sandbox.sslcommerz.com/stores/logos/demoLogo.png",
+   "store_name":"Demo",
+   "desc":[
+      {
+         "name":"AMEX",
+         "type":"amex",
+         "logo":"https://sandbox.sslcommerz.com/gwprocess/v4/image/gw/amex.png",
+         "gw":"amexcard",
+         "r_flag":"1",
+         "redirectGatewayURL":"https://sandbox.sslcommerz.com/gwprocess/v4/bankgw/indexhtmlOTP.php?mamount=50.00&ssl_id=260519200828IAM5x4jk5feEX2h&Q=REDIRECT&SESSIONKEY=85CD52BEE0ABC9C8E8B4D84D545C1896&tran_type=success&cardname=amexcard"
+      }, 
+   ],
+   "is_direct_pay_enable":"0"
+}
+
+
+
+
+{
    "tran_id":[
       "45c60e2c-e64a-42f8-832a-ab696ac05851"
    ],
