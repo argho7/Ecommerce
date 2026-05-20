@@ -37,6 +37,10 @@ def payment_system(request, product, category):
     user = request.user
     email =user.email
     phone = user.phone
+    address = user.address
+    city = user.city
+    country= user.country
+    
     product_name = product
     product_category = category
 
@@ -51,9 +55,9 @@ def payment_system(request, product, category):
     'cus_name' : user,
     'cus_email' : email,
     'cus_phone' : phone,
-    'cus_add1' : "customer address",
-    'cus_city' : "Dhaka",
-    'cus_country' : "Bangladesh",
+    'cus_add1' : address,
+    'cus_city' : city,
+    'cus_country' : country,
     'shipping_method' : "NO",
     'multi_card_name' : "",
     'num_of_item' : 1,

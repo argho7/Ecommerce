@@ -8,6 +8,9 @@ class Custom_User(AbstractUser):
     profile_picture = models.ImageField(upload_to='profile_pictures/', default='profile_pictures/default.png', blank=True, null=True)
     is_verified = models.BooleanField(default=False)
     otp = models.CharField(max_length=10, blank=True, null=True)
+    address=models.CharField(default="", max_length=50, blank=True, null=True)
+    city=models.CharField(default="Khulna_default", max_length=20, blank=True, null=True)
+    country=models.CharField(default="Bangladesh", max_length=15, blank=True, null=True)
 
     def __str__(self):
         return self.username
@@ -76,8 +79,8 @@ class Order(models.Model):
     verify_sign = models.CharField( max_length=50, blank=True, null=True)
     verify_key = models.TextField(blank=True, null=True)
     verify_sign_sha2 = models.CharField( max_length=100, blank=True, null=True)
-    risk_level = models.CharField( max_length=50, blank=True, null=True)
-    risk_title = models.CharField( max_length=50, blank=True, null=True)
+    risk_level = models.CharField( max_length=5, blank=True, null=True)
+    risk_title = models.CharField( max_length=10, blank=True, null=True)
 
     def __str__(self):
         return f"{self.user}+{self.product}"
