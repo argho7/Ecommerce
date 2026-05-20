@@ -62,13 +62,12 @@ class Order(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     card_type = models.CharField( max_length=50, blank=True, null=True)
     store_amount = models.DecimalField(default=0, max_digits=10, decimal_places=2)
-    card_no = models.CharField( max_length=50, blank=True, null=True)
     bank_tran_id = models.CharField( max_length=50, blank=True, null=True)
     status = models.CharField( max_length=50, blank=True, null=True)
     tran_time=models.DateTimeField(auto_now_add=True,  null=True)
     error = models.CharField( max_length=50, default='', blank=True, null=True)
     currency = models.CharField( max_length=50,default="BDT", blank=True, null=True)
-    stacard_issuertus = models.CharField( max_length=50, blank=True, null=True)
+    card_issuer = models.CharField( max_length=50, blank=True, null=True)
     card_brand = models.CharField( max_length=50, blank=True, null=True)
     card_sub_brand = models.CharField( max_length=50, blank=True, null=True)
     card_issuer_country = models.CharField( max_length=50, blank=True, null=True)
@@ -77,18 +76,8 @@ class Order(models.Model):
     verify_sign = models.CharField( max_length=50, blank=True, null=True)
     verify_key = models.TextField(blank=True, null=True)
     verify_sign_sha2 = models.CharField( max_length=100, blank=True, null=True)
-    currency_type = models.CharField( max_length=50, blank=True, null=True)
-    currency_amount = models.CharField( max_length=50, blank=True, null=True)
-    currency_rate = models.CharField( max_length=50, blank=True, null=True)
-    base_fair = models.CharField( max_length=50, blank=True, null=True)
-    value_a = models.CharField( max_length=50, blank=True, null=True)
-    value_b = models.CharField( max_length=50, blank=True, null=True)
-    value_c = models.CharField( max_length=50, blank=True, null=True)
-    value_d = models.CharField( max_length=50, blank=True, null=True)
-    subscription_id = models.CharField( max_length=50, blank=True, null=True)
     risk_level = models.CharField( max_length=50, blank=True, null=True)
     risk_title = models.CharField( max_length=50, blank=True, null=True)
 
     def __str__(self):
         return f"{self.user}+{self.product}"
-    

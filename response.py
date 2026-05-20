@@ -51,9 +51,6 @@
    "store_amount":[
       "390.00"
    ],
-   "card_no":[
-      ""
-   ],
    "bank_tran_id":[
       "260519181430UjyA88wjV70YKYv"
    ],
@@ -95,33 +92,6 @@
    ],
    "verify_sign_sha2":[
       "d01d44f69dda3a881142a7c0567df416b2dd93fb34cea5bdd6e4d516643b1558"
-   ],
-   "currency_type":[
-      "BDT"
-   ],
-   "currency_amount":[
-      "400.00"
-   ],
-   "currency_rate":[
-      "1.0000"
-   ],
-   "base_fair":[
-      "0.00"
-   ],
-   "value_a":[
-      ""
-   ],
-   "value_b":[
-      ""
-   ],
-   "value_c":[
-      ""
-   ],
-   "value_d":[
-      ""
-   ],
-   "subscription_id":[
-      ""
    ],
    "risk_level":[
       "0"

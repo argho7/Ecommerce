@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.http import HttpResponse
 from .models import Category, Product, Order, Custom_User
-from .sslcommerz import initiate_sslcommerz_payment
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
