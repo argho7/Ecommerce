@@ -68,11 +68,11 @@ def payment_system(request, product, category):
 
     response = sslcommez.createSession(post_body)
 
-    status=response.get('status')
+    con_status=response.get('status')
     tran_time=response.get('tran_time')
     session_key=response.get('sessionkey')
 
-    Order.objects.create(connection_status=status, user=user, product=product_name, 
+    Order.objects.create(connection_status=con_status, user=user, product=product_name, 
                          category=product_category, price=price, currency=currency, 
                          tran_id=tran_id, tran_time=tran_time, session_key=session_key)
 
