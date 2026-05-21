@@ -130,7 +130,7 @@ def logout_view(request):
 def buy_now(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     category=Category.objects.get(product__id=product_id)
-
+    
     response = payment_system(request,product,category)
 
     status=response["status"]
@@ -148,8 +148,27 @@ def payment_success(request):
         tran_id=response.get('tran_id')
         tran_date=response.get('tran_date')
 
-        get_product=Order.objects.get(tran_id = tran_id)
-        user_mail=get_product.user.email
+        product=Order.objects.get(tran_id = tran_id)
+        product.status = response.get('status')
+        product.is_paid = True
+        product.val_id = response.get('val_id')
+        product.card_type = response.get('card_type')
+        product.store_amount = response.get('store_amount')
+        product.bank_tran_id = response.get('bank_tran_id')
+        product.card_issuer = response.get('card_issuer')
+        product.card_brand = response.get('card_brand')
+        product.card_sub_brand = response.get('card_sub_brand')
+        product.card_issuer_country = response.get('card_issuer_country')
+        product.card_issuer_country_code = response.get('card_issuer_country_code')
+        product.store_id = response.get('store_id')
+        product.verify_sign = response.get('verify_sign')
+        product.verify_key = response.get('verify_key')
+        product.verify_sign_sha2 = response.get('verify_sign_sha2')
+        product.risk_level = response.get('risk_level')
+        product.risk_title = response.get('risk_title')
+        product.save()
+
+        user_mail=product.user.email
 
         send_email(
             subject="Payment receipt",
@@ -160,6 +179,9 @@ def payment_success(request):
 
 @csrf_exempt
 def payment_fail(request):
+    if request.method=='POST':
+        response=request.POST
+        print(response)
     return render(request, 'payment_fail.html')
 
 def payment_cancel(request):

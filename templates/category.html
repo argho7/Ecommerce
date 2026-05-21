@@ -102,14 +102,17 @@
                     
                     <!-- Search Bar -->
                     <div class="main">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search products...">
-                            <div class="input-group-append">
-                                <button class="btn btn-secondary" type="button" style="background-color: #f26522; border-color:#f26522">
-                                    <i class="fa fa-search"></i>
-                                </button>
+                        <form method="POST" action="{% url 'search' %}">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control" placeholder="Search products..." value="{{ request.GET.q }}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="submit" style="background-color: #f26522; border-color:#f26522">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                     
                     <!-- User Box -->

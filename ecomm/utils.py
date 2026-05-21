@@ -39,7 +39,7 @@ def payment_system(request, product, category):
     phone = user.phone
     address = user.address
     city = user.city
-    country= user.country
+    country = user.country
     
     product_name = product
     product_category = category
@@ -63,15 +63,17 @@ def payment_system(request, product, category):
     'num_of_item' : 1,
     'product_name' : product_name,
     'product_category' : product_category,
-    'product_profile' : "general",
+    'product_profile' : "test product profile",
     }
 
     response = sslcommez.createSession(post_body)
 
-    state=response.get('state')
+    status=response.get('status')
     tran_time=response.get('tran_time')
+    session_key=response.get('sessionkey')
 
-    Order.objects.create(status=state, user=user, product=product_name, category=product_category, price=price, 
-                        currency=currency, tran_id=tran_id, tran_time=tran_time)
+    Order.objects.create(connection_status=status, user=user, product=product_name, 
+                         category=product_category, price=price, currency=currency, 
+                         tran_id=tran_id, tran_time=tran_time, session_key=session_key)
 
     return response

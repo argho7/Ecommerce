@@ -32,6 +32,6 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display=('user', 'id', 'product', 'price', 'state', 'tran_time')
+    list_display=('user', 'id', 'product', 'price', 'is_paid', 'status', 'connection_status', 'tran_time')
     search_fields=('user', 'product', 'category', 'price', )
-    list_filter=('category', 'state', 'tran_time',)
+    list_filter=('category', 'status', 'connection_status', 'tran_time',)

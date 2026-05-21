@@ -51,25 +51,22 @@ class Product(models.Model):
         return self.name
     
 class Order(models.Model):
-    state_choices=[('Success','Successful'),
-                   ('Fail', 'Failed'),
-                   ('Cancel', 'Cancel'),
-                   ('Unknown','Unknown')]
-    
     user = models.ForeignKey(Custom_User, on_delete=models.DO_NOTHING, null = True)
     product = models.ForeignKey(Product, on_delete=models.DO_NOTHING, null=True)
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING, null = True)
-    state=models.CharField(choices=state_choices, max_length=10, default='Unknown', null=True, blank=True)
+    connection_status=models.CharField(max_length=10, default='Unknown', null=True, blank=True)
+    status = models.CharField( max_length=50, blank=True, null=True)
+    is_paid = models.BooleanField(default=False, null=True)
     tran_id=models.CharField(max_length=40, blank=True, null=True)
+    session_key=models.CharField(max_length=40, blank=True, null=True)
     val_id=models.CharField(max_length=40, blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     card_type = models.CharField( max_length=50, blank=True, null=True)
     store_amount = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     bank_tran_id = models.CharField( max_length=50, blank=True, null=True)
-    status = models.CharField( max_length=50, blank=True, null=True)
     tran_time=models.DateTimeField(auto_now_add=True,  null=True)
     error = models.CharField( max_length=50, default='', blank=True, null=True)
-    currency = models.CharField( max_length=50,default="BDT", blank=True, null=True)
+    currency = models.CharField(max_length=50,default="BDT", blank=True, null=True)
     card_issuer = models.CharField( max_length=50, blank=True, null=True)
     card_brand = models.CharField( max_length=50, blank=True, null=True)
     card_sub_brand = models.CharField( max_length=50, blank=True, null=True)
