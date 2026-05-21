@@ -122,7 +122,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
-# STATIC_ROOT= BASE_DIR / 'static'
 STATICFILES_DIRS = [ BASE_DIR / 'static/']
 
 MEDIA_URL = 'media/'
@@ -139,15 +138,10 @@ SSLCOMMERZ_SANDBOX = True if os.getenv('SSLCOMMERZ_SANDBOX') == 'True' else Fals
 
 
 #FOR SENDING EMAIL
-# Specify the SMTP backend
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-# Host and Port (e.g., for Gmail)
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True  # Use TLS for security
-
-# Authentication
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_USE_TLS = True if os.getenv('EMAIL_USE_TLS') == 'True' else False
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD') # Use an App Password, not your regular password
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
