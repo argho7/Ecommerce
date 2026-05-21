@@ -4,8 +4,8 @@ from .utils import Generate_Slug
 # Create your models here.
 
 class Custom_User(AbstractUser):
-    phone=models.IntegerField(blank=True, null=True)
-    profile_picture = models.ImageField(upload_to='profile_pictures/', default='profile_pictures/default.png', blank=True, null=True)
+    phone=models.IntegerField(default="123456789", blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', default='profile_pictures/default.jpg', blank=True, null=True)
     is_verified = models.BooleanField(default=False)
     otp = models.CharField(max_length=10, blank=True, null=True)
     address=models.CharField(default="", max_length=50, blank=True, null=True)

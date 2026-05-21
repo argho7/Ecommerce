@@ -1,14 +1,16 @@
+import random
+import string
+from datetime import datetime
+from django.db.models import Q
+from django.conf import settings
 from django.contrib import messages
-from django.http import HttpResponse
+from .utils import send_email, payment_system
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 from .models import Category, Product, Order, Custom_User
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
-from django.db.models import Q
-from .utils import send_email, payment_system
-from django.conf import settings
-from django.core.mail import send_mail
+
 
 # Create your views here.
 def home(request):
@@ -25,10 +27,8 @@ def category_view(request, slug):
 
 def product_view(request, slug):
     product=get_object_or_404(Product, slug=slug)
-    # print(product)
     context={'product': product}
     return render(request, 'product_details.html', context)
-
 
 def search(request):
     if request.method=='POST':
@@ -39,37 +39,35 @@ def search(request):
     else:
         return render(request, 'search.html')
     
-
 def cart(request):
     send_email(
-        "Test Subject",
+        "Test Subject - "+str(datetime.now().strftime("%Y-%m-%d %I:%M %p")),
         "This is a test email sent from Django via SMTP.",
-        'sahaarghya2002@gmail.com'
-    )
-    
-    # send_email(subject,message,from_email,receiver)
+        settings.DEFAULT_FROM_EMAIL)
     context={}
     return render(request, 'search.html' )
 
-    
 def add_to_cart(request,product_id=None):
-
     return render(request, 'search.html',)
 
 @login_required
 def profile(request):
     if request.method == 'POST':
         user = request.user
+        
         user.username = request.POST.get('username')
         user.email = request.POST.get('email')
         user.first_name = request.POST.get('first_name', '')
         user.last_name = request.POST.get('last_name', '')
-        user.phone = request.POST.get('phone') or None
-
+        user.phone = request.POST.get('phone')
+        user.address = request.POST.get('address', '')
+        user.city = request.POST.get('city', 'Khulna_default')
+        user.country = request.POST.get('country', 'Bangladesh')
+        
         if request.FILES.get('profile_picture'):
             user.profile_picture = request.FILES.get('profile_picture')
+        
         user.save()
-
         messages.success(request, 'Profile updated successfully!')
         return redirect('profile')
     
@@ -89,36 +87,63 @@ def register_view(request):
         if Custom_User.objects.filter(username=username).exists():
             messages.error(request, "Username already exists")
             return redirect('register')
-            
+        
         if Custom_User.objects.filter(email=email).exists():
             messages.error(request, "Email already exists")
             return redirect('register')
-
-        user = Custom_User.objects.create_user(username=username, email=email, password=password1)
         
-        user.profile_picture = 'profile_pictures/default.png'
-        user.save()
-
-        messages.success(request, "Account created successfully! Please login.")
-        return redirect('login')
-
+        otp = generate_otp()
+        
+        user = Custom_User.objects.create_user(
+            username=username,
+            email=email,
+            password=password1,
+            is_verified=False,
+            otp=otp
+        )
+        
+        send_email(
+            'Verify Your Email - Eflyer',
+            f'''Hello {username}, 
+            
+            Thank you for registering with Eflyer! 
+            
+            Your OTP for email verification is: {otp} 
+            
+            This OTP is valid for 10 minutes. 
+            
+            If you didn't request this, please ignore this email. 
+            
+            Best regards, 
+            
+            Eflyer Team ''',
+            email,
+        )
+        
+        messages.success(request, f'Verification OTP sent to {email}. Please verify your email.')
+        return redirect('verify_email', user_id=user.id)
+    
     return render(request, 'register.html')
 
 def login_view(request):
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
-
+        
         user = authenticate(request, username=username, password=password)
-
+        
         if user is not None:
+            if not user.is_verified:
+                messages.error(request, 'Please verify your email before logging in.')
+                return redirect('verify_email', user_id=user.id)
+            
             login(request, user)
-            messages.success(request, f"Welcome back, {user.username}!")
+            messages.success(request, f'Welcome back, {user.username}!')
             return redirect('home')
         else:
-            messages.error(request, "Invalid username or password")
+            messages.error(request, 'Invalid username or password')
             return redirect('login')
-
+    
     return render(request, 'login.html')
 
 def logout_view(request):
@@ -189,3 +214,47 @@ def payment_cancel(request):
 
 def payment_gate_auth_fail(request):
     return render(request, 'payment_gate_auth_fail.html')
+
+def generate_otp():
+    return ''.join(random.choices(string.digits, k=6))
+
+def verify_email_view(request, user_id):
+    user = Custom_User.objects.get(id=user_id)
+    
+    if request.method == "POST":
+        entered_otp = request.POST.get('otp')
+        
+        if user.otp == entered_otp:
+            user.is_verified = True
+            user.otp = None
+            user.save()
+            messages.success(request, 'Email verified successfully! You can now login.')
+            return redirect('login')
+        else:
+            messages.error(request, 'Invalid OTP. Please try again.')
+            return redirect('verify_email', user_id=user_id)
+    
+    return render(request, 'verify_email.html', {'user': user})
+
+def resend_otp_view(request, user_id):
+    user = Custom_User.objects.get(id=user_id)
+    
+    new_otp = generate_otp()
+    user.otp = new_otp
+    user.save()
+    
+    send_email(
+        'New OTP for Email Verification - Eflyer',
+        f'''Hello {user.username},
+        
+        Your new OTP is: {new_otp}
+        
+        This OTP is valid for 10 minutes.
+        
+        Best regards,
+        Eflyer Team''',
+        user.email,
+        )
+    
+    messages.success(request, 'New OTP sent to your email.')
+    return redirect('verify_email', user_id=user_id)

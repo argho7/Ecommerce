@@ -136,7 +136,6 @@ SSLCOMMERZ_STORE_ID = os.getenv('SSLCOMMERZ_STORE_ID')
 SSLCOMMERZ_STORE_PASSWORD = os.getenv('SSLCOMMERZ_STORE_PASSWORD')
 SSLCOMMERZ_SANDBOX = True if os.getenv('SSLCOMMERZ_SANDBOX') == 'True' else False
 
-
 #FOR SENDING EMAIL
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST')
