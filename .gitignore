@@ -220,6 +220,5 @@ __marimo__/
 # Other files
 details.txt
 template.txt
-db.sqlite3
 share.bat
 response.py
